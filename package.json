@@ -1,0 +1,27 @@
+{
+  "name": "@kravc/portal",
+  "version": "1.0.1",
+  "description": "Client for managing [Portal](https://portal.kra.vc/about/) issuers and verifiable credential types.",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/alexkravets/portal.git"
+  },
+  "directories": {
+    "src": "src"
+  },
+  "bin": {
+    "portal": "bin/config.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Oleksandr Kravets <a@kra.vc>",
+  "license": "ISC",
+  "dependencies": {
+    "@kravc/identity": "^1.0.3",
+    "@kravc/request": "^1.0.0",
+    "canonicalize": "^1.0.5",
+    "keychain": "^1.3.0"
+  }
+}
