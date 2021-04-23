@@ -1,6 +1,6 @@
 {
   "name": "@kravc/portal",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Client for managing [Portal](https://portal.kra.vc/) issuers and verifiable credential types.",
   "main": "src/index.js",
   "repository": {

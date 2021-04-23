@@ -77,4 +77,22 @@ npx portal
 ```
 
 If the script runs for the first time it generates key pair (DID) for the
-administrator and stores it in the local keychain.
+administrator and stores it in the local keychain. This behavior could be
+overriden by using `.portal.json` file. To preconfigure administrators identity
+generate private key seed using command:
+
+```sh
+npx seed
+```
+
+Create `.portal.json` file replacing `DEFAULT_SEED` with the value generated
+via seed command:
+
+```json
+{
+  "default": "DEFAULT_SEED"
+}
+```
+
+Make sure file is added to the `.gitignore` and is not committed. Check out
+full set of files at [example/](/example) folder.

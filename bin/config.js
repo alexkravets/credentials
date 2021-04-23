@@ -10,7 +10,6 @@ const ROOT_PATH = process.cwd()
 
 const config = async (issuerJsonPath) => {
   const identity = await portal.getIdentity()
-  console.log('Administrator:', identity.did)
 
   // TODO: Validate issuer configuration againt schema:
   const issuer = require(`${ROOT_PATH}/${issuerJsonPath}`)
@@ -30,10 +29,11 @@ const config = async (issuerJsonPath) => {
     return
   }
 
+  console.log('Credentials:')
   for (const credentialTypeAttributes of credentialTypes) {
     const credentialTypeId = await portal.getCredentialType(identity, issuerId, credentialTypeAttributes)
 
-    console.log('Credential:', credentialTypeId)
+    console.log(' -', credentialTypeId)
   }
 }
 
