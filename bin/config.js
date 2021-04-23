@@ -2,43 +2,41 @@
 
 'use strict'
 
-const portal = require('../src')
+const portal           = require('../src')
+const { resolve }      = require('path')
+const { readFileSync } = require('fs')
 
 const ROOT_PATH = process.cwd()
 
-const config = async (issuerJsonPath, credentialTypeJsonPath) => {
+const config = async (issuerJsonPath) => {
   const identity = await portal.getIdentity()
   console.log('Administrator:', identity.did)
 
-  let issuer
-  let issuerId
+  // TODO: Validate issuer configuration againt schema:
+  const issuer = require(`${ROOT_PATH}/${issuerJsonPath}`)
 
-  if (issuerJsonPath) {
-    issuer   = require(`${ROOT_PATH}/${issuerJsonPath}`)
-    issuerId = await portal.getIssuer(identity, issuer)
+  const { iconPath, credentialTypes = [], ...issuerAttributes } = issuer
 
-    console.log('Issuer:', issuerId)
+  const path = resolve(iconPath)
+  const icon = readFileSync(path).toString('base64')
+
+  const issuerId = await portal.getIssuer(identity, { ...issuerAttributes, icon })
+
+  console.log('Issuer:', issuerId)
+
+  const hasCredentialTypes = credentialTypes.length > 0
+
+  if (!hasCredentialTypes) {
+    return
   }
 
-  let credentialType
-
-  if (credentialTypeJsonPath) {
-    credentialType         = require(`${ROOT_PATH}/${credentialTypeJsonPath}`)
-    const credentialTypeId = await portal.getCredentialType(identity, issuerId, credentialType)
+  for (const credentialTypeAttributes of credentialTypes) {
+    const credentialTypeId = await portal.getCredentialType(identity, issuerId, credentialTypeAttributes)
 
     console.log('Credential:', credentialTypeId)
   }
-
-  const isNoParameters = !issuer || !credentialType
-  if (isNoParameters) {
-    console.info('\nportal [ISSUER_JSON_PATH] [CREDENTIAL_TYPE_JSON_PATH]\n')
-    console.info('Parameters:')
-    console.info('  ISSUER_JSON_PATH            Path to JSON file with issuer attributes')
-    console.info('  CREDENTIAL_TYPE_JSON_PATH   Path to JSON file with credential type attributes')
-  }
 }
 
-const issuerJsonPath         = process.argv[2]
-const credentialTypeJsonPath = process.argv[3]
+const issuerJsonPath = process.argv[2] || 'issuer.json'
 
-config(issuerJsonPath, credentialTypeJsonPath)
+config(issuerJsonPath)

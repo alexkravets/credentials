@@ -1,39 +1,13 @@
 'use strict'
 
-const { jsonRequest }     = require('@kravc/request')
-const createAuthorization = require('./createAuthorization')
-
-const authorizationOptions = { domain: 'https://portal.kra.vc/credentials/' }
+const request = require('./request')
 
 const createCredentialType = async (identity, issuerId, payload) => {
-  const body = { ...payload, issuerId }
-
-  const parameters    = { mutation: body }
-  const authorization = await createAuthorization(identity, parameters, authorizationOptions)
-
-  const options = {
-    url:     'https://portal.kra.vc/credentials/CreateCredentialType',
-    headers: { authorization },
-    body
-  }
-
-  const { object: { data } } = await jsonRequest(console, options)
-
-  return data
+  return request(identity, 'CreateCredentialType', { mutation: { issuerId, ...payload } })
 }
 
 const indexCredentialTypes = async (identity, issuerId) => {
-  const parameters    = { issuerId }
-  const authorization = await createAuthorization(identity, parameters, authorizationOptions)
-
-  const options = {
-    url:     `https://portal.kra.vc/credentials/IndexCredentialTypes?issuerId=${issuerId}`,
-    headers: { authorization }
-  }
-
-  const { object: { data } } = await jsonRequest(console, options)
-
-  return data
+  return request(identity, 'IndexCredentialTypes', { issuerId })
 }
 
 const getCreateCredentialType = async (identity, issuerId, payload) => {

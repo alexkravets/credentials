@@ -6,11 +6,11 @@ const { Identity } = require('@kravc/identity')
 
 const generateSeed = () => crypto.randomBytes(Identity.SEED_LENGTH).toString('hex')
 
-const getPasswordAsync = (options) => new Promise((resolve, reject) => {
+const getPasswordAsync = (options) => new global.Promise((resolve, reject) => {
   keychain.getPassword(options, (err, val) => err ? reject(err) : resolve(val))
 })
 
-const setPasswordAsync = (options) => new Promise((resolve, reject) => {
+const setPasswordAsync = (options) => new global.Promise((resolve, reject) => {
   keychain.setPassword(options, err => err ? reject(err) : resolve())
 })
 

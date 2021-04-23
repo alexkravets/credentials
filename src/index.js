@@ -1,8 +1,8 @@
 'use strict'
 
-const getIssuer           = require('../src/getIssuer')
-const getIdentity         = require('../src/getIdentity')
-const getCredentialType   = require('../src/getCredentialType')
+const getIssuer         = require('./getIssuer')
+const getIdentity       = require('./getIdentity')
+const getCredentialType = require('./getCredentialType')
 
 module.exports = {
   getIssuer,
