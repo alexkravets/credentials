@@ -1,45 +1,14 @@
 'use strict'
 
-const canonicalize    = require('canonicalize')
+const sha256          = require('js-sha256')
 const { stringify }   = require('querystring')
-const { createHash }  = require('crypto')
 const { jsonRequest } = require('@kravc/request')
 
-const domain = 'https://portal.kra.vc/credentials/'
-
-const getParametersDigest = (parameters = {}) => {
-  const { mutation, ...query } = parameters
-
-  const hasQuery   = Object.keys(query).length > 0
-  const _parameters = {}
-
-  if (hasQuery) {
-    _parameters.query = stringify(query)
-  }
-
-  if (mutation) {
-    _parameters.mutation = mutation
-  }
-
-  const canonized = canonicalize(_parameters)
-  const digest = createHash('sha256').update(canonized).digest().toString('hex')
-
-  return digest
-}
-
-const createAuthorization = (identity, parameters) => {
-  const challenge    = getParametersDigest(parameters)
-  const proofOptions = { domain, challenge }
-
-  return identity.createPresentation([], { format: 'jwt', proofOptions })
-}
+const baseUrl = 'https://portal.kra.vc/credentials/'
 
 const request = async (identity, operationId, parameters = {}) => {
-  const authorization = await createAuthorization(identity, parameters)
-
   const options = {
-    url:     `${domain}${operationId}`,
-    headers: { authorization }
+    url: `${baseUrl}${operationId}`
   }
 
   const { mutation, ...query } = parameters
@@ -50,9 +19,15 @@ const request = async (identity, operationId, parameters = {}) => {
     options.url = `${options.url}?${queryString}`
   }
 
+  const proofOptions = { domain: options.url }
+
   if (mutation) {
-    options.body = mutation
+    options.body = JSON.stringify(mutation)
+    proofOptions.challenge = sha256(options.body)
   }
+
+  options.headers.Authorization =
+    await identity.createPresentation([], { format: 'jwt', proofOptions })
 
   const { object: { data, error } } = await jsonRequest(console, options)
 

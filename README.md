@@ -9,6 +9,7 @@ Install npm package as development dependency:
 
 ```sh
 npm i --save-dev @kravc/portal
+npm i --save-dev @kravc/dos-ssi
 ```
 
 ### Register Issuer
@@ -79,7 +80,8 @@ npx portal
 If the script runs for the first time it generates key pair (DID) for the
 administrator and stores it in the local keychain. This behavior could be
 overriden by using `.portal.json` file. To preconfigure administrators identity
-generate private key seed using command:
+generate private key seed using command (requires `@kravc/dos-ssi` to be
+installed as development dependency):
 
 ```sh
 npx seed
