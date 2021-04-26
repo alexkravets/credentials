@@ -8,7 +8,8 @@ const baseUrl = 'https://portal.kra.vc/credentials/'
 
 const request = async (identity, operationId, parameters = {}) => {
   const options = {
-    url: `${baseUrl}${operationId}`
+    url:     `${baseUrl}${operationId}`,
+    headers: {}
   }
 
   const { mutation, ...query } = parameters
