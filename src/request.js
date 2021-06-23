@@ -1,34 +1,31 @@
 'use strict'
 
-const sha256          = require('js-sha256')
 const { stringify }   = require('querystring')
 const { jsonRequest } = require('@kravc/request')
 
-const baseUrl = 'https://portal.kra.vc/credentials/'
+const baseUrl = 'https://api.dev.credentials.kra.vc/v1/'
 
 const request = async (identity, operationId, parameters = {}) => {
-  const options = {
-    url:     `${baseUrl}${operationId}`,
-    headers: {}
-  }
+  let url = `${baseUrl}${operationId}`
 
   const { mutation, ...query } = parameters
   const hasQuery = Object.keys(query).length > 0
 
   if (hasQuery) {
     const queryString = stringify(query)
-    options.url = `${options.url}?${queryString}`
+    url = `${url}?${queryString}`
   }
 
-  const proofOptions = { domain: options.url }
+  let body
 
   if (mutation) {
-    options.body = JSON.stringify(mutation)
-    proofOptions.challenge = sha256(options.body)
+    body = JSON.stringify(mutation)
   }
 
-  options.headers.Authorization =
-    await identity.createPresentation([], { format: 'jwt', proofOptions })
+  const token         = await identity.createAuthorization(url, body)
+  const authorization = `Bearer ${token}`
+
+  const options = { url, body, headers: { authorization } }
 
   const { object: { data, error } } = await jsonRequest(console, options)
 

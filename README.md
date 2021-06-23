@@ -1,29 +1,29 @@
-# @kravc/portal
+# @kravc/credentials
 
-Client for managing [Portal](https://portal.kra.vc/) issuers and verifiable
-credential types.
+CLI for [Credentials](https://api.credentials.kra.vc/v1/) service to manage
+issuers and verifiable credentials.
+
 
 ## Quick Start
 
 Install npm package as development dependency:
 
 ```sh
-npm i --save-dev @kravc/portal
-npm i --save-dev @kravc/dos-ssi
+npm i --save-dev @kravc/credentials
 ```
 
-### Register Issuer
+### Register an Issuer
 
-Create `./issuer.json` file containing issuer metadata, icon and credential
+Create `./issuer.json` file with issuer metadata, icon and credential
 types, e.g:
 
 ```json
 {
   "iconPath": "icon.png",
   "metadata": {
-    "url":      "https://portal.kra.vc/minesweeper/",
-    "title":    "Minesweeper",
-    "subtitle": "Classic board puzzle",
+    "url":      "https://apple.co/394ouT8",
+    "title":    "Mines - Classic Bomb Puzzle",
+    "subtitle": "Minesweeper logic board game",
     "category": "Games"
   },
   "credentialTypes": [
@@ -71,20 +71,20 @@ types, e.g:
 }
 ```
 
-Registers a new issuer on the `Portal`:
+Registers a new issuer:
 
 ```sh
-npx portal
+npx credentials issuer.json
 ```
 
 If the script runs for the first time it generates key pair (DID) for the
 administrator and stores it in the local keychain. This behavior could be
-overriden by using `.portal.json` file. To preconfigure administrators identity
-generate private key seed using command (requires `@kravc/dos-ssi` to be
-installed as development dependency):
+overriden by using `.portal.json` file.
+
+To pre-configure administrators identity, generate private key seed via:
 
 ```sh
-npx seed
+npx credentials seed
 ```
 
 Create `.portal.json` file replacing `DEFAULT_SEED` with the value generated
@@ -96,5 +96,11 @@ via seed command:
 }
 ```
 
-Make sure file is added to the `.gitignore` and is not committed. Check out
-full set of files at [example/](/example) folder.
+Make sure the file is added to the `.gitignore` and is not committed.
+Check out full set of files at [example/](/example) folder.
+
+---
+
+Author: [Alexander Kravets](mailto:a@kra.vc)
+
+Revision: June 23, 2021

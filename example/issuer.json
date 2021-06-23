@@ -1,14 +1,14 @@
 {
-  "iconPath": "icon.png",
+  "iconPath": "example/icon.png",
   "metadata": {
-    "url":      "https://portal.kra.vc/minesweeper/",
-    "title":    "Minesweeper",
-    "subtitle": "Classic board puzzle",
+    "url":      "https://apple.co/394ouT8",
+    "title":    "Mines - Classic Bomb Puzzle",
+    "subtitle": "Minesweeper logic board game",
     "category": "Games"
   },
   "credentialTypes": [
     {
-      "name": "Score",
+      "name": "Scorecard",
       "version": 1,
       "schemas": [
         {
@@ -21,19 +21,15 @@
         {
           "name": "VideoGameScore",
           "fields": [
-            { "name": "videoGame",      "$type": "ref", "$ref": "VideoGame" },
-            { "name": "wins",           "$type": "integer" },
-            { "name": "rounds",         "$type": "integer" },
-            { "name": "winRate",        "$type": "integer" },
-            { "name": "topScore",       "$type": "integer" },
-            { "name": "topScoreJson",   "$type": "string" },
-            { "name": "bestStreak",     "$type": "integer" },
-            { "name": "bestStreakJson", "$type": "string" },
-            { "name": "enduranceMs",    "$type": "integer" },
-            { "name": "bestRoundMs",    "$type": "integer" },
-            { "name": "bestRoundJson",  "$type": "string" },
-            { "name": "averageRoundMs", "$type": "integer" },
-            { "name": "dateStarted",    "$type": "dateTime" }
+            { "name": "videoGame",     "$type": "ref", "$ref": "VideoGame" },
+            { "name": "bestTime",      "$type": "string" },
+            { "name": "topScore",      "$type": "integer" },
+            { "name": "bestWinStreak", "$type": "integer" },
+            { "name": "averageTime",   "$type": "string" },
+            { "name": "winRate",       "$type": "string" },
+            { "name": "wins",          "$type": "integer" },
+            { "name": "endurance",     "$type": "string" },
+            { "name": "complexity",    "$type": "string" }
           ]
         },
         {
