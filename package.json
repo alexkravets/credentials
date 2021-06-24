@@ -1,6 +1,6 @@
 {
   "name": "@kravc/credentials",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "CLI for [Credentials](https://api.credentials.kra.vc/v1/) service.",
   "main": "src/index.js",
   "repository": {

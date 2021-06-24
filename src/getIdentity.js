@@ -18,7 +18,7 @@ const setPasswordAsync = (options) => new global.Promise((resolve, reject) => {
 
 const getIdentityFromKeychain = async () => {
   const keychainParameters = {
-    service: '@portal/identity',
+    service: '@credentials/identity',
     account: 'default'
   }
 
